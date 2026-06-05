@@ -1,24 +1,310 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stopařská mise</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopařská mise</title>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-img{
-width:200px;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: #234028;
+      background:
+        linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.78)),
+        url("images/les.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
 
-</style>
+    .container {
+      width: min(1100px, 94%);
+      margin: 0 auto;
+      padding: 20px 0 35px;
+    }
 
+    h1 {
+      font-size: clamp(32px, 7vw, 56px);
+      margin: 10px 0;
+    }
+
+    .intro {
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 22px;
+      padding: 14px 18px;
+      margin: 0 auto 18px;
+      max-width: 760px;
+      box-shadow: 0 5px 14px #0003;
+    }
+
+    .intro p,
+    .score {
+      font-size: clamp(17px, 4vw, 22px);
+      font-weight: bold;
+      margin: 8px 0;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 14px;
+      margin: 22px auto;
+    }
+
+    .card {
+      min-height: 170px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 4px solid #7eaa5f;
+      border-radius: 20px;
+      padding: 10px;
+      cursor: pointer;
+      box-shadow: 0 5px 12px #0003;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      max-width: 100%;
+      height: 105px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    .card span {
+      font-size: clamp(14px, 3vw, 17px);
+      font-weight: bold;
+    }
+
+    .selected {
+      background: #fff3a3;
+      border-color: #e0aa00;
+    }
+
+    .matched {
+      background: #c5f2bd;
+      border-color: #38963b;
+      pointer-events: none;
+      opacity: 0.86;
+    }
+
+    .wrong {
+      background: #ffb7b7;
+      border-color: #cc3333;
+    }
+
+    button {
+      background: #4f8f3a;
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 26px;
+      font-size: 19px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 12px #0003;
+    }
+
+    button:hover {
+      background: #3d732d;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        background-attachment: scroll;
+      }
+
+      .board {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .card {
+        min-height: 145px;
+        padding: 8px;
+      }
+
+      .card img {
+        height: 85px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
+    <h1>🌲 Stopařská mise 🐾</h1>
 
-<h1>Stopařská mise</h1>
+    <div class="intro">
+      <div class="score">
+        Nalezené trojice: <span id="score">0</span>
+      </div>
+      <p>Klikni na zvíře, jeho stopu a jeho trus.</p>
+    </div>
 
-<img src="images/srnka.png">
+    <div class="board" id="board"></div>
 
+    <button onclick="restartGame()">Hrát znovu</button>
+  </div>
+
+  <script>
+    const groups = [
+      {
+        id: 1,
+        cards: [
+          { image: "images/jezevec.png", label: "Jezevec" },
+          { image: "images/stopa-jezevec.png", label: "Stopa jezevce" },
+          { image: "images/trus-jezevec.png", label: "Trus jezevce" }
+        ]
+      },
+      {
+        id: 2,
+        cards: [
+          { image: "images/rys.png", label: "Rys" },
+          { image: "images/stopa-rys.png", label: "Stopa rysa" },
+          { image: "images/trus-rys.png", label: "Trus rysa" }
+        ]
+      },
+      {
+        id: 3,
+        cards: [
+          { image: "images/srnka.png", label: "Srnka" },
+          { image: "images/stopa-srnka.png", label: "Stopa srnky" },
+          { image: "images/trus-srnka.png", label: "Trus srnky" }
+        ]
+      },
+      {
+        id: 4,
+        cards: [
+          { image: "images/veverka.png", label: "Veverka" },
+          { image: "images/stopa-veverka.png", label: "Stopa veverky" },
+          { image: "images/trus-veverka.png", label: "Trus veverky" }
+        ]
+      },
+      {
+        id: 5,
+        cards: [
+          { image: "images/zajic.png", label: "Zajíc" },
+          { image: "images/stopa-zajic.png", label: "Stopa zajíce" },
+          { image: "images/trus-zajic.png", label: "Trus zajíce" }
+        ]
+      }
+    ];
+
+    let cards = [];
+    let selectedCards = [];
+    let score = 0;
+
+    const board = document.getElementById("board");
+    const scoreElement = document.getElementById("score");
+
+    function createCards() {
+      cards = [];
+
+      groups.forEach(group => {
+        group.cards.forEach(card => {
+          cards.push({
+            id: group.id,
+            image: card.image,
+            label: card.label
+          });
+        });
+      });
+
+      cards.sort(() => Math.random() - 0.5);
+    }
+
+    function renderBoard() {
+      board.innerHTML = "";
+
+      cards.forEach(card => {
+        const div = document.createElement("div");
+        div.className = "card";
+
+        div.innerHTML = `
+          <img src="${card.image}" alt="${card.label}">
+          <span>${card.label}</span>
+        `;
+
+        div.addEventListener("click", () => selectCard(div, card));
+        board.appendChild(div);
+      });
+    }
+
+    function selectCard(element, card) {
+      if (
+        selectedCards.length >= 3 ||
+        element.classList.contains("selected") ||
+        element.classList.contains("matched")
+      ) {
+        return;
+      }
+
+      element.classList.add("selected");
+      selectedCards.push({ element, card });
+
+      if (selectedCards.length === 3) {
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      const allSameGroup = selectedCards.every(
+        item => item.card.id === selectedCards[0].card.id
+      );
+
+      if (allSameGroup) {
+        selectedCards.forEach(item => {
+          item.element.classList.remove("selected");
+          item.element.classList.add("matched");
+        });
+
+        score++;
+        scoreElement.textContent = score;
+        selectedCards = [];
+
+        if (score === groups.length) {
+          setTimeout(() => {
+            alert("Výborně! Našel/našla jsi všechny zvířecí trojice! 🌲🐾");
+          }, 300);
+        }
+      } else {
+        selectedCards.forEach(item => {
+          item.element.classList.add("wrong");
+        });
+
+        setTimeout(() => {
+          selectedCards.forEach(item => {
+            item.element.classList.remove("selected", "wrong");
+          });
+
+          selectedCards = [];
+        }, 900);
+      }
+    }
+
+    function restartGame() {
+      score = 0;
+      selectedCards = [];
+      scoreElement.textContent = score;
+      createCards();
+      renderBoard();
+    }
+
+    restartGame();
+  </script>
 </body>
 </html>
