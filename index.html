@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stopařská mise</title>
+  <title>Stopařská akademie</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
@@ -14,53 +14,126 @@
       margin: 0;
       min-height: 100vh;
       font-family: 'Patrick Hand', cursive;
-      text-align: center;
       color: #234028;
+      text-align: center;
       background:
-        linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.65)),
+        linear-gradient(rgba(255,255,255,0.22), rgba(255,255,255,0.68)),
         url("images/les.jpg");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
     }
 
-    .container {
-      width: min(1250px, 94%);
+    .screen {
+      display: none;
+      width: min(1150px, 94%);
       margin: 0 auto;
-      padding: 10px 0 35px;
+      padding: 18px 0 40px;
     }
+
+    .active { display: block; }
 
     h1 {
       font-family: 'Amatic SC', cursive;
-      font-size: clamp(52px, 9vw, 90px);
-      margin: 5px 0 10px;
+      font-size: clamp(56px, 10vw, 96px);
+      margin: 8px 0 14px;
       letter-spacing: 2px;
-      color: #1f3d26;
-      text-shadow: 0 4px 12px rgba(255,255,255,0.8);
+      text-shadow: 0 4px 12px rgba(255,255,255,0.9);
     }
 
-    .intro {
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(4px);
-      border-radius: 26px;
-      padding: 16px 22px;
-      margin: 0 auto 32px;
-      max-width: 800px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+    h2 {
+      font-family: 'Amatic SC', cursive;
+      font-size: clamp(42px, 7vw, 70px);
+      margin: 10px 0;
     }
 
-    .intro p,
-    .score {
-      font-size: clamp(23px, 4vw, 32px);
+    .panel {
+      background: rgba(255,255,255,0.86);
+      backdrop-filter: blur(5px);
+      border-radius: 28px;
+      padding: 24px;
+      margin: 16px auto;
+      max-width: 850px;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+    }
+
+    .panel p {
+      font-size: clamp(22px, 4vw, 30px);
+      line-height: 1.25;
+      margin: 10px 0;
+    }
+
+    .stats {
+      font-size: clamp(22px, 4vw, 30px);
       font-weight: bold;
-      margin: 6px 0;
+      margin: 8px 0;
+    }
+
+    button {
+      font-family: 'Patrick Hand', cursive;
+      background: #4f8f3a;
+      color: white;
+      border: none;
+      border-radius: 18px;
+      padding: 14px 28px;
+      font-size: clamp(23px, 5vw, 32px);
+      font-weight: bold;
+      cursor: pointer;
+      margin: 10px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.24);
+    }
+
+    button:hover { background: #3d732d; }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .choice {
+      background: rgba(255,255,255,0.92);
+      border: 4px solid #6ea04f;
+      border-radius: 24px;
+      padding: 20px;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.18);
+      transition: transform 0.15s;
+    }
+
+    .choice:hover { transform: scale(1.04); }
+
+    .choice h3 {
+      font-size: 34px;
+      margin: 4px 0 8px;
+    }
+
+    .choice p {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .topbar {
+      background: rgba(255,255,255,0.84);
+      border-radius: 24px;
+      padding: 12px 16px;
+      margin: 0 auto 28px;
+      max-width: 900px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: bold;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.14);
     }
 
     .board {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
       gap: 28px 22px;
-      margin: 22px auto 35px;
+      margin: 20px auto 35px;
       align-items: center;
     }
 
@@ -102,101 +175,74 @@
       pointer-events: none;
     }
 
-    .card:hover {
-      box-shadow: 0 20px 36px rgba(0,0,0,0.25);
-      background: rgba(255,255,255,0.98);
-      z-index: 5;
-    }
-
     .selected {
       background: #fff3a3;
       border-color: #e0aa00;
       box-shadow: 0 0 0 6px rgba(224,170,0,0.22), 0 16px 28px rgba(0,0,0,0.22);
     }
 
-    .matched {
-      background: #c5f2bd;
-      border-color: #38963b;
-      pointer-events: none;
-      opacity: 0.82;
-    }
-    @keyframes flyAway {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-300px) rotate(720deg) scale(0.1);
-  }
-}
-
-.fly-away {
-  animation: flyAway 1s forwards;
-}
-    .checkmark {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 120px;
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.show-checkmark {
-  animation: popCheck 1.2s ease;
-}
-
-@keyframes popCheck {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-
-  30% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.3);
-  }
-
-  80% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
     .wrong {
       background: #ffb7b7;
       border-color: #cc3333;
     }
 
-    button {
-      font-family: 'Patrick Hand', cursive;
-      background: #4f8f3a;
-      color: white;
-      border: none;
-      border-radius: 18px;
-      padding: 14px 30px;
-      font-size: 26px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.24);
+    .fly-away {
+      animation: flyAway 0.9s forwards !important;
+      pointer-events: none;
     }
 
-    button:hover {
-      background: #3d732d;
+    .checkmark, .points-pop {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .checkmark {
+      font-size: 125px;
+      transform: translate(-50%, -50%);
+    }
+
+    .points-pop {
+      font-size: 48px;
+      font-weight: bold;
+      color: #2f8f35;
+      transform: translate(-50%, -20%);
+    }
+
+    .show-checkmark { animation: popCheck 1s ease; }
+    .show-points { animation: popPoints 1s ease; }
+
+    .final-title {
+      font-family: 'Amatic SC', cursive;
+      font-size: clamp(54px, 9vw, 90px);
+      margin: 0;
     }
 
     @keyframes float {
       0%   { translate: 0 0; }
       50%  { translate: 0 -8px; }
       100% { translate: 0 0; }
+    }
+
+    @keyframes flyAway {
+      0% { opacity: 1; scale: 1; }
+      100% { opacity: 0; translate: 0 -330px; rotate: 720deg; scale: 0.1; }
+    }
+
+    @keyframes popCheck {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+      30% { opacity: 1; transform: translate(-50%, -50%) scale(1.25); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes popPoints {
+      0% { opacity: 0; transform: translate(-50%, 0) scale(0.7); }
+      30% { opacity: 1; transform: translate(-50%, -35px) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -80px) scale(1); }
     }
 
     @media (max-width: 700px) {
@@ -212,115 +258,209 @@
         padding: 8px;
       }
 
-      .card img {
-        height: 95px;
-      }
-
-      .intro {
-        margin-bottom: 18px;
-      }
+      .card img { height: 95px; }
     }
 
     @media (max-width: 430px) {
-      .board {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .card {
-        min-height: 135px;
-      }
-
-      .card img {
-        height: 100px;
-      }
-
-      h1 {
-        font-size: 58px;
-      }
+      .board { grid-template-columns: repeat(2, 1fr); }
+      .card { min-height: 135px; }
+      .card img { height: 100px; }
+      h1 { font-size: 58px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>🌲 Stopařská mise 🐾</h1>
+  <div id="home" class="screen active">
+    <h1>🌲 Stopařská akademie 🐾</h1>
 
-    <div class="intro">
-      <div class="score">
-        Nalezené trojice: <span id="score">0</span>
-      </div>
-      <p>Klikni na zvíře, jeho stopu a jeho trus.</p>
+    <div class="panel">
+      <p>Vítej ve Stopařské akademii!</p>
+      <p>Les je domov mnoha zvířat. Některá potkáš jen málokdy, ale často po sobě zanechávají stopy, trus nebo jiná znamení.</p>
+      <p>Zahraj si hru, nauč se poznávat obyvatele lesa a pak vyraz ven. Možná díky tomu poznáš, u koho jsi právě na návštěvě.</p>
+
+      <div class="stats">🏆 Nejlepší skóre: <span id="bestScore">0</span></div>
+      <div class="stats">🌿 Poslední hra: <span id="lastScore">0</span></div>
+
+      <button onclick="showScreen('mode')">Pokračovat</button>
     </div>
-
-    <div class="board" id="board"></div>
-    <div id="checkmark" class="checkmark">✅</div>
-
-    <button onclick="restartGame()">Hrát znovu</button>
   </div>
 
+  <div id="mode" class="screen">
+    <h1>Vyber si výzvu</h1>
+
+    <div class="choice-grid">
+      <div class="choice" onclick="selectMode('track')">
+        <h3>🐾 Začínající stopař</h3>
+        <p>Spoj zvíře a jeho stopu.</p>
+      </div>
+
+      <div class="choice" onclick="selectMode('poop')">
+        <h3>💩 Zkušený stopař</h3>
+        <p>Spoj zvíře a jeho trus.</p>
+      </div>
+
+      <div class="choice" onclick="selectMode('triple')">
+        <h3>🌲 Mistr stopař</h3>
+        <p>Spoj zvíře, stopu a trus.</p>
+      </div>
+    </div>
+
+    <button onclick="showScreen('home')">Zpět</button>
+  </div>
+
+  <div id="difficulty" class="screen">
+    <h1>Kolik zvířat chceš hledat?</h1>
+
+    <div class="choice-grid">
+      <div class="choice" onclick="startGame(3)"><h3>3 zvířata</h3></div>
+      <div class="choice" onclick="startGame(5)"><h3>5 zvířat</h3></div>
+    </div>
+
+    <button onclick="showScreen('mode')">Zpět</button>
+  </div>
+
+  <div id="game" class="screen">
+    <h1>Stopařská mise</h1>
+
+    <div class="topbar">
+      <span>⭐ Skóre: <span id="score">0</span></span>
+      <span>⏱️ Čas: <span id="time">0</span> s</span>
+      <span>✅ Nalezeno: <span id="found">0</span>/<span id="total">0</span></span>
+    </div>
+
+    <div id="board" class="board"></div>
+
+    <button onclick="showScreen('mode')">Hlavní menu</button>
+  </div>
+
+  <div id="result" class="screen">
+    <div class="panel">
+      <div class="final-title">🏆 Výborně!</div>
+      <p>Jsi opravdový stopař!</p>
+      <p>Skóre: <strong><span id="finalScore">0</span></strong></p>
+      <p>Čas: <strong><span id="finalTime">0</span> s</strong></p>
+      <p>Bonus za rychlost: <strong><span id="finalBonus">0</span></strong></p>
+
+      <button onclick="showScreen('mode')">Hrát znovu</button>
+      <button onclick="showScreen('home')">Hlavní stránka</button>
+    </div>
+  </div>
+
+  <div id="checkmark" class="checkmark">✅</div>
+  <div id="pointsPop" class="points-pop"></div>
+
   <script>
-    const groups = [
+    const animals = [
       {
         id: 1,
-        cards: [
-          { image: "images/jezevec.png", label: "Jezevec" },
-          { image: "images/stopa-jezevec.png", label: "Stopa jezevce" },
-          { image: "images/trus-jezevec.png", label: "Trus jezevce" }
-        ]
+        name: "Jezevec",
+        animal: "images/jezevec.png",
+        track: "images/stopa-jezevec.png",
+        poop: "images/trus-jezevec.png"
       },
       {
         id: 2,
-        cards: [
-          { image: "images/rys.png", label: "Rys" },
-          { image: "images/stopa-rys.png", label: "Stopa rysa" },
-          { image: "images/trus-rys.png", label: "Trus rysa" }
-        ]
+        name: "Rys",
+        animal: "images/rys.png",
+        track: "images/stopa-rys.png",
+        poop: "images/trus-rys.png"
       },
       {
         id: 3,
-        cards: [
-          { image: "images/srnka.png", label: "Srnka" },
-          { image: "images/stopa-srnka.png", label: "Stopa srnky" },
-          { image: "images/trus-srnka.png", label: "Trus srnky" }
-        ]
+        name: "Srnka",
+        animal: "images/srnka.png",
+        track: "images/stopa-srnka.png",
+        poop: "images/trus-srnka.png"
       },
       {
         id: 4,
-        cards: [
-          { image: "images/veverka.png", label: "Veverka" },
-          { image: "images/stopa-veverka.png", label: "Stopa veverky" },
-          { image: "images/trus-veverka.png", label: "Trus veverky" }
-        ]
+        name: "Veverka",
+        animal: "images/veverka.png",
+        track: "images/stopa-veverka.png",
+        poop: "images/trus-veverka.png"
       },
       {
         id: 5,
-        cards: [
-          { image: "images/zajic.png", label: "Zajíc" },
-          { image: "images/stopa-zajic.png", label: "Stopa zajíce" },
-          { image: "images/trus-zajic.png", label: "Trus zajíce" }
-        ]
+        name: "Zajíc",
+        animal: "images/zajic.png",
+        track: "images/stopa-zajic.png",
+        poop: "images/trus-zajic.png"
       }
     ];
 
+    let mode = "track";
+    let selectedAnimals = [];
     let cards = [];
     let selectedCards = [];
     let score = 0;
+    let found = 0;
+    let total = 0;
+    let startTime = 0;
+    let timer = null;
 
+    const bestScoreEl = document.getElementById("bestScore");
+    const lastScoreEl = document.getElementById("lastScore");
+    const scoreEl = document.getElementById("score");
+    const timeEl = document.getElementById("time");
+    const foundEl = document.getElementById("found");
+    const totalEl = document.getElementById("total");
     const board = document.getElementById("board");
-    const scoreElement = document.getElementById("score");
 
-    function createCards() {
-      cards = [];
-      groups.forEach(group => {
-        group.cards.forEach(card => {
-          cards.push({
-            id: group.id,
-            image: card.image,
-            label: card.label
-          });
-        });
+    function loadScores() {
+      bestScoreEl.textContent = localStorage.getItem("bestScore") || 0;
+      lastScoreEl.textContent = localStorage.getItem("lastScore") || 0;
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
       });
-      cards.sort(() => Math.random() - 0.5);
+      document.getElementById(id).classList.add("active");
+
+      if (id === "home") loadScores();
+      if (id !== "game") stopTimer();
+    }
+
+    function selectMode(selectedMode) {
+      mode = selectedMode;
+      showScreen("difficulty");
+    }
+
+    function startGame(count) {
+      selectedAnimals = shuffle([...animals]).slice(0, count);
+      selectedCards = [];
+      cards = [];
+      score = 0;
+      found = 0;
+      total = count;
+
+      selectedAnimals.forEach(animal => {
+        cards.push({ id: animal.id, image: animal.animal, label: animal.name, kind: "animal" });
+
+        if (mode === "track") {
+          cards.push({ id: animal.id, image: animal.track, label: "Stopa " + animal.name, kind: "track" });
+        }
+
+        if (mode === "poop") {
+          cards.push({ id: animal.id, image: animal.poop, label: "Trus " + animal.name, kind: "poop" });
+        }
+
+        if (mode === "triple") {
+          cards.push({ id: animal.id, image: animal.track, label: "Stopa " + animal.name, kind: "track" });
+          cards.push({ id: animal.id, image: animal.poop, label: "Trus " + animal.name, kind: "poop" });
+        }
+      });
+
+      cards = shuffle(cards);
+      scoreEl.textContent = score;
+      foundEl.textContent = found;
+      totalEl.textContent = total;
+      timeEl.textContent = 0;
+
+      renderBoard();
+      showScreen("game");
+      startTimer();
     }
 
     function renderBoard() {
@@ -336,46 +476,54 @@
     }
 
     function selectCard(element, card) {
+      const needed = mode === "triple" ? 3 : 2;
+
       if (
-        selectedCards.length >= 3 ||
+        selectedCards.length >= needed ||
         element.classList.contains("selected") ||
-        element.classList.contains("matched")
+        element.classList.contains("fly-away")
       ) return;
 
       element.classList.add("selected");
       selectedCards.push({ element, card });
 
-      if (selectedCards.length === 3) checkMatch();
+      if (selectedCards.length === needed) checkMatch();
     }
 
     function checkMatch() {
-      const allSameGroup = selectedCards.every(
+      const sameAnimal = selectedCards.every(
         item => item.card.id === selectedCards[0].card.id
       );
 
-      if (allSameGroup) {
+      const uniqueKinds = new Set(selectedCards.map(item => item.card.kind));
+      const needed = mode === "triple" ? 3 : 2;
+      const isCorrect = sameAnimal && uniqueKinds.size === needed;
+
+      if (isCorrect) {
+        const points = mode === "triple" ? 15 : 10;
+        score += points;
+        found++;
+        scoreEl.textContent = score;
+        foundEl.textContent = found;
+
         selectedCards.forEach(item => {
-  item.element.classList.remove("selected");
-  item.element.classList.add("fly-away");
-});
+          item.element.classList.remove("selected");
+          item.element.classList.add("fly-away");
+        });
 
-const checkmark = document.getElementById("checkmark");
-checkmark.classList.add("show-checkmark");
+        showCheckmark();
+        showPoints("+" + points);
 
-setTimeout(() => {
-  checkmark.classList.remove("show-checkmark");
-}, 1200);
-
-        score++;
-        scoreElement.textContent = score;
         selectedCards = [];
 
-       if (score === groups.length) {
-  setTimeout(() => {
-    alert("🏆 Výborně! Jsi opravdový stopař!");
-  }, 1200);
-}
+        if (found === total) {
+          setTimeout(finishGame, 1100);
+        }
       } else {
+        score -= 2;
+        scoreEl.textContent = score;
+        showPoints("-2");
+
         selectedCards.forEach(item => item.element.classList.add("wrong"));
 
         setTimeout(() => {
@@ -383,19 +531,70 @@ setTimeout(() => {
             item.element.classList.remove("selected", "wrong");
           });
           selectedCards = [];
-        }, 900);
+        }, 850);
       }
     }
 
-    function restartGame() {
-      score = 0;
-      selectedCards = [];
-      scoreElement.textContent = score;
-      createCards();
-      renderBoard();
+    function finishGame() {
+      stopTimer();
+
+      const finalTime = Number(timeEl.textContent);
+      let bonus = 0;
+
+      if (finalTime <= 60) {
+        bonus = 70 - finalTime;
+        score += bonus;
+      }
+
+      localStorage.setItem("lastScore", score);
+
+      const best = Number(localStorage.getItem("bestScore") || 0);
+      if (score > best) {
+        localStorage.setItem("bestScore", score);
+      }
+
+      document.getElementById("finalScore").textContent = score;
+      document.getElementById("finalTime").textContent = finalTime;
+      document.getElementById("finalBonus").textContent = "+" + bonus;
+
+      showScreen("result");
     }
 
-    restartGame();
+    function startTimer() {
+      stopTimer();
+      startTime = Date.now();
+
+      timer = setInterval(() => {
+        const seconds = Math.floor((Date.now() - startTime) / 1000);
+        timeEl.textContent = seconds;
+      }, 500);
+    }
+
+    function stopTimer() {
+      if (timer) clearInterval(timer);
+      timer = null;
+    }
+
+    function showCheckmark() {
+      const check = document.getElementById("checkmark");
+      check.classList.remove("show-checkmark");
+      void check.offsetWidth;
+      check.classList.add("show-checkmark");
+    }
+
+    function showPoints(text) {
+      const pop = document.getElementById("pointsPop");
+      pop.textContent = text;
+      pop.classList.remove("show-points");
+      void pop.offsetWidth;
+      pop.classList.add("show-points");
+    }
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    loadScores();
   </script>
 </body>
 </html>
