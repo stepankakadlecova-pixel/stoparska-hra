@@ -14,559 +14,51 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: 'Patrick Hand', cursive;
-  text-align: center;
   color: #234028;
+  text-align: center;
   background:
-    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.7)),
+    linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.72)),
     url("images/les.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 
-<div class="logo">
-  <img src="images/logo.png" alt="Zábavná příroda">
-</div>
-  
 .screen {
   display: none;
   width: min(1150px, 94%);
   margin: 0 auto;
-  padding: 18px 0 40px;
+  padding: 16px 0 40px;
 }
 
 .active { display: block; }
 
-h1 {
-  font-family: 'Amatic SC', cursive;
-  font-size: clamp(56px, 10vw, 96px);
-  margin: 8px 0 14px;
-}
-
-.panel, .choice {
-  background: rgba(255,255,255,.88);
-  border-radius: 28px;
-  padding: 24px;
-  margin: 16px auto;
-  box-shadow: 0 14px 32px rgba(0,0,0,.18);
-}
-
-.panel { max-width: 900px; }
-
-p, .stats {
-  font-size: clamp(22px, 4vw, 30px);
-}
-
-button {
-  font-family: 'Patrick Hand', cursive;
-  background: #4f8f3a;
-  color: white;
-  border: none;
-  border-radius: 18px;
-  padding: 14px 28px;
-  font-size: clamp(23px, 5vw, 32px);
-  font-weight: bold;
-  cursor: pointer;
-  margin: 10px;
-}
-
-.choice-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
-}
-
-.choice {
-  cursor: pointer;
-  border: 4px solid #6ea04f;
-}
-
-.choice:hover { transform: scale(1.04); }
-
-.topbar {
-  background: rgba(255,255,255,.86);
-  border-radius: 24px;
-  padding: 12px;
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.players {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.player-box {
-  padding: 10px 16px;
-  border-radius: 18px;
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-  opacity: .65;
-}
-
-.current-player {
-  opacity: 1;
-  transform: scale(1.08);
-  box-shadow: 0 0 0 5px rgba(255,255,255,.8);
-}
-
-.board {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-  gap: 28px 22px;
-}
-
-.card {
-  min-height: 185px;
-  background: rgba(255,255,255,.94);
-  border: 5px solid #6ea04f;
-  border-radius: 24px;
-  padding: 12px;
-  cursor: pointer;
-  box-shadow: 0 14px 24px rgba(0,0,0,.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: float 3.5s ease-in-out infinite;
-}
-
-.card:nth-child(2n) { animation-duration: 4s; transform: rotate(3deg); }
-.card:nth-child(3n) { animation-duration: 4.5s; transform: rotate(-4deg); }
-.card:nth-child(5n) { animation-duration: 5s; transform: rotate(5deg); }
-
-.card img {
-  max-width: 100%;
-  height: 135px;
-  object-fit: contain;
-  pointer-events: none;
-}
-
-.card-back {
-  font-family: 'Amatic SC', cursive;
-  font-size: 72px;
-  color: #315b2c;
-}
-
-.hidden img { display: none; }
-.revealed .card-back { display: none; }
-
-.selected {
-  background: #fff3a3;
-  border-color: #e0aa00;
-}
-
-.wrong {
-  background: #ffb7b7;
-  border-color: #cc3333;
-}
-
-.fly-away {
-  animation: flyAway .9s forwards !important;
-  pointer-events: none;
-}
-
-.checkmark, .points-pop {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.checkmark {
-  font-size: 125px;
-  transform: translate(-50%, -50%);
-}
-
-.points-pop {
-  font-size: 54px;
-  font-weight: bold;
-  color: #2f8f35;
-}
-
-.show-checkmark { animation: popCheck 1s ease; }
-.show-points { animation: popPoints 1s ease; }
-
-@keyframes float {
-  0% { translate: 0 0; }
-  50% { translate: 0 -8px; }
-  100% { translate: 0 0; }
-}
-
-@keyframes flyAway {
-  to {
-    opacity: 0;
-    translate: 0 -330px;
-    rotate: 720deg;
-    scale: .1;
-  }
-}
-
-@keyframes popCheck {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-  30% { opacity: 1; transform: translate(-50%, -50%) scale(1.25); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
-}
-
-@keyframes popPoints {
-  0% { opacity: 0; transform: translate(-50%, 0) scale(.7); }
-  30% { opacity: 1; transform: translate(-50%, -35px) scale(1.2); }
-  100% { opacity: 0; transform: translate(-50%, -80px) scale(1); }
-}
-
-@media (max-width: 700px) {
-  .board { grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .card { min-height: 130px; }
-  .card img { height: 95px; }
-}
-
-@media (max-width: 430px) {
-  .board { grid-template-columns: repeat(2, 1fr); }
-}
-
-  .logo {
-  text-align: center;
-  margin-top: 10px;
+.logo {
+  max-height: 95px;
+  margin: 8px auto 0;
 }
 
 .logo img {
-  max-height: 120px;
-  width: auto;
+  max-height: 95px;
+  max-width: 240px;
 }
-.author {
-  margin-top: 30px;
-  font-size: 18px;
-  color: #2f4f2f;
-  opacity: 0.8;
-}
-  
-</style>
-</head>
-
-<body>
-
-<div id="home" class="screen active">
-  <h1>🌲 Stopařská akademie 🐾</h1>
-  <div class="panel">
-    <p>Vítej ve Stopařské akademii! Zahraj si pexeso, nauč se poznávat stopy a trus lesních zvířat a pak vyraz ven zjistit, u koho jsi v lese na návštěvě.</p>
-    <div class="stats">🏆 Nejlepší skóre: <span id="bestScore">0</span></div>
-    <button onclick="showScreen('mode')">Začít dobrodružství</button>
-  </div>
-</div>
-
-<div id="mode" class="screen">
-  <h1>Vyber hru</h1>
-  <div class="choice-grid">
-    <div class="choice" onclick="selectMode('track')"><h2>🐾 Zvíře + stopa</h2></div>
-    <div class="choice" onclick="selectMode('poop')"><h2>💩 Zvíře + trus</h2></div>
-    <div class="choice" onclick="selectMode('triple')"><h2>🌲 Zvíře + stopa + trus</h2></div>
-  </div>
-  
-</div>
-
-<div id="settings" class="screen">
-  <h1>Nastavení hry</h1>
-
-  <div class="panel">
-    <p>Kolik bude hrát hráčů?</p>
-    <button onclick="setPlayers(1)">1 hráč</button>
-    <button onclick="setPlayers(2)">2 hráči</button>
-    <button onclick="setPlayers(3)">3 hráči</button>
-    <button onclick="setPlayers(4)">4 hráči</button>
-  </div>
-
-  <div class="panel">
-    <p>Kolik zvířat bude ve hře?</p>
-    <button onclick="setAnimalCount(3)">3 zvířata</button>
-    <button onclick="setAnimalCount(5)">5 zvířat</button>
-  </div>
-
-  <div class="panel">
-    <p>Časový limit</p>
-    <button onclick="setTimeLimit(60)">60 s</button>
-    <button onclick="setTimeLimit(90)">90 s</button>
-    <button onclick="setTimeLimit(120)">120 s</button>
-  </div>
-
-  <button onclick="startGame()">Spustit hru</button>
-</div>
-
-<div id="game" class="screen">
-  <h1>Stopařské pexeso</h1>
-
-  <div class="topbar">
-    <span>⏱️ Čas: <span id="timeLeft">0</span> s</span>
-    <span>✅ Nalezeno: <span id="found">0</span>/<span id="total">0</span></span>
-    <span>🎲 Hraje: <span id="currentPlayerName">Hráč 1</span></span>
-  </div>
-
-  <div id="playersBox" class="players"></div>
-  <div id="board" class="board"></div>
-</div>
-
-<div id="result" class="screen">
-  <div class="panel">
-    <h1>🏆 Výborně!</h1>
-    <p>Jsi opravdový stopař!</p>
-    <div id="finalResults"></div>
-    <button onclick="showScreen('home')">Hlavní stránka</button>
-    <button onclick="showScreen('mode')">Hrát znovu</button>
-  </div>
-</div>
-
-<div id="checkmark" class="checkmark">✅</div>
-<div id="pointsPop" class="points-pop"></div>
-
-<script>
-const animals = [
-  { id:1, animal:"images/jezevec.png", track:"images/stopa-jezevec.png", poop:"images/trus-jezevec.png" },
-  { id:2, animal:"images/rys.png", track:"images/stopa-rys.png", poop:"images/trus-rys.png" },
-  { id:3, animal:"images/srnka.png", track:"images/stopa-srnka.png", poop:"images/trus-srnka.png" },
-  { id:4, animal:"images/veverka.png", track:"images/stopa-veverka.png", poop:"images/trus-veverka.png" },
-  { id:5, animal:"images/zajic.png", track:"images/stopa-zajic.png", poop:"images/trus-zajic.png" }
-];
-
-const playerColors = ["#4f8f3a", "#d9822b", "#3b75b8", "#9b4fb8"];
-
-let mode = "track";
-let playerCount = 1;
-let animalCount = 3;
-let timeLimit = 60;
-let players = [];
-let currentPlayer = 0;
-let cards = [];
-let selectedCards = [];
-let found = 0;
-let total = 0;
-let timer;
-
-function showScreen(id) {
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  if (id !== "game") clearInterval(timer);
-  if (id === "home") loadBest();
-}
-
-function selectMode(m) {
-  mode = m;
-  showScreen("settings");
-}
-
-function setPlayers(n) { playerCount = n; }
-function setAnimalCount(n) { animalCount = n; }
-function setTimeLimit(n) { timeLimit = n; }
-
-function startGame() {
-  players = [];
-  for (let i = 0; i < playerCount; i++) {
-    players.push({ name: "Hráč " + (i + 1), score: 0, color: playerColors[i] });
-  }
-
-  currentPlayer = 0;
-  found = 0;
-  selectedCards = [];
-  cards = [];
-
-  const chosen = shuffle([...animals]).slice(0, animalCount);
-
-  chosen.forEach(a => {
-    cards.push({ id:a.id, kind:"animal", image:a.animal });
-
-    if (mode === "track") cards.push({ id:a.id, kind:"track", image:a.track });
-    if (mode === "poop") cards.push({ id:a.id, kind:"poop", image:a.poop });
-    if (mode === "triple") {
-      cards.push({ id:a.id, kind:"track", image:a.track });
-      cards.push({ id:a.id, kind:"poop", image:a.poop });
-    }
-  });
-
-  cards = shuffle(cards);
-  total = animalCount;
-
-  document.getElementById("found").textContent = found;
-  document.getElementById("total").textContent = total;
-
-  renderPlayers();
-  renderBoard();
-  showScreen("game");
-  startTimer();
-}
-
-function renderPlayers() {
-  const box = document.getElementById("playersBox");
-  box.innerHTML = "";
-
-  players.forEach((p, i) => {
-    const div = document.createElement("div");
-    div.className = "player-box" + (i === currentPlayer ? " current-player" : "");
-    div.style.background = p.color;
-    div.innerHTML = `${p.name}: ${p.score} bodů`;
-    box.appendChild(div);
-  });
-
-  document.getElementById("currentPlayerName").textContent = players[currentPlayer].name;
-}
-
-function renderBoard() {
-  const board = document.getElementById("board");
-  board.innerHTML = "";
-
-  cards.forEach(card => {
-    const div = document.createElement("div");
-    div.className = "card hidden";
-    div.innerHTML = `
-      <div class="card-back">?</div>
-      <img src="${card.image}">
-    `;
-    div.addEventListener("click", () => selectCard(div, card));
-    board.appendChild(div);
-  });
-}
-
-function selectCard(element, card) {
-  const needed = mode === "triple" ? 3 : 2;
-
-  if (
-    selectedCards.length >= needed ||
-    element.classList.contains("revealed") ||
-    element.classList.contains("fly-away")
-  ) return;
-
-  element.classList.remove("hidden");
-  element.classList.add("revealed", "selected");
-  selectedCards.push({ element, card });
-
-  if (selectedCards.length === needed) checkMatch();
-}
-
-function checkMatch() {
-  const needed = mode === "triple" ? 3 : 2;
-
-  const sameAnimal = selectedCards.every(x => x.card.id === selectedCards[0].card.id);
-  const kinds = new Set(selectedCards.map(x => x.card.kind));
-  const correct = sameAnimal && kinds.size === needed;
-
-  if (correct) {
-    const points = mode === "triple" ? 15 : 10;
-    players[currentPlayer].score += points;
-    found++;
-
-    showCheckmark();
-    showPoints("+" + points);
-
-    selectedCards.forEach(x => {
-      x.element.classList.remove("selected");
-      x.element.classList.add("fly-away");
-    });
-
-    selectedCards = [];
-    document.getElementById("found").textContent = found;
-    renderPlayers();
-
-    if (found === total) {
-      setTimeout(finishGame, 1000);
-    }
-  } else {
-    players[currentPlayer].score -= 2;
-    showPoints("-2");
-
-    selectedCards.forEach(x => x.element.classList.add("wrong"));
-
-    setTimeout(() => {
-      selectedCards.forEach(x => {
-        x.element.classList.remove("revealed", "selected", "wrong");
-        x.element.classList.add("hidden");
-      });
-
-      selectedCards = [];
-      nextPlayer();
-    }, 950);
-  }
-}
-
-function nextPlayer() {
-  currentPlayer = (currentPlayer + 1) % players.length;
-  renderPlayers();
-}
-
-function startTimer() {
-  let timeLeft = timeLimit;
-  document.getElementById("timeLeft").textContent = timeLeft;
-
-  clearInterval(timer);
-  timer = setInterval(() => {
-    timeLeft--;
-    document.getElementById("timeLeft").textContent = timeLeft;
-
-    if (timeLeft <= 0) finishGame();
-  }, 1000);
-}
-
-function finishGame() {
-  clearInterval(timer);
-
-  const best = Math.max(...players.map(p => p.score));
-  const storedBest = Number(localStorage.getItem("bestScore") || 0);
-  if (best > storedBest) localStorage.setItem("bestScore", best);
-
-  const results = document.getElementById("finalResults");
-  results.innerHTML = players
-    .sort((a,b) => b.score - a.score)
-    .map((p, i) => `<p>${i === 0 ? "🏆 " : ""}${p.name}: <strong>${p.score} bodů</strong></p>`)
-    .join("");
-
-  showScreen("result");
-}
-
-function showCheckmark() {
-  const c = document.getElementById("checkmark");
-  c.classList.remove("show-checkmark");
-  void c.offsetWidth;
-  c.classList.add("show-checkmark");
-}
-
-function showPoints(text) {
-  const p = document.getElementById("pointsPop");
-  p.textContent = text;
-  p.classList.remove("show-points");
-  void p.offsetWidth;
-  p.classList.add("show-points");
-}
-
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-function loadBest() {
-  document.getElementById("bestScore").textContent = localStorage.getItem("bestScore") || 0;
-}
-
-loadBest();
-</script>
-
-</body>
-</html>.active { display: block; }
 
 h1 {
   font-family: 'Amatic SC', cursive;
-  font-size: clamp(56px, 10vw, 96px);
+  font-size: clamp(54px, 10vw, 96px);
   margin: 8px 0 14px;
+}
+
+h2 {
+  font-family: 'Amatic SC', cursive;
+  font-size: clamp(38px, 7vw, 68px);
+  margin: 8px 0;
 }
 
 .panel, .choice {
   background: rgba(255,255,255,.88);
   border-radius: 28px;
-  padding: 24px;
+  padding: 22px;
   margin: 16px auto;
   box-shadow: 0 14px 32px rgba(0,0,0,.18);
 }
@@ -575,6 +67,7 @@ h1 {
 
 p, .stats {
   font-size: clamp(22px, 4vw, 30px);
+  line-height: 1.25;
 }
 
 button {
@@ -584,11 +77,14 @@ button {
   border: none;
   border-radius: 18px;
   padding: 14px 28px;
-  font-size: clamp(23px, 5vw, 32px);
+  font-size: clamp(22px, 5vw, 32px);
   font-weight: bold;
   cursor: pointer;
-  margin: 10px;
+  margin: 9px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.22);
 }
+
+button:hover { background: #3d732d; }
 
 .choice-grid {
   display: grid;
@@ -607,12 +103,12 @@ button {
   background: rgba(255,255,255,.86);
   border-radius: 24px;
   padding: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   display: flex;
   justify-content: center;
   gap: 18px;
   flex-wrap: wrap;
-  font-size: 26px;
+  font-size: clamp(22px, 4vw, 30px);
   font-weight: bold;
 }
 
@@ -643,6 +139,7 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   gap: 28px 22px;
+  margin: 20px auto 35px;
 }
 
 .card {
@@ -714,6 +211,12 @@ button {
   color: #2f8f35;
 }
 
+.author {
+  margin-top: 28px;
+  font-size: 19px;
+  opacity: .8;
+}
+
 .show-checkmark { animation: popCheck 1s ease; }
 .show-points { animation: popPoints 1s ease; }
 
@@ -746,7 +249,7 @@ button {
 
 @media (max-width: 700px) {
   .board { grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .card { min-height: 130px; }
+  .card { min-height: 130px; border-width: 4px; }
   .card img { height: 95px; }
 }
 
@@ -759,27 +262,56 @@ button {
 <body>
 
 <div id="home" class="screen active">
+  <div class="logo"><img src="images/logo.png" alt="Zábavná příroda" onerror="this.style.display='none'"></div>
   <h1>🌲 Stopařská akademie 🐾</h1>
+
   <div class="panel">
-    <p>Vítej ve Stopařské akademii! Zahraj si pexeso, nauč se poznávat stopy a trus lesních zvířat a pak vyraz ven zjistit, u koho jsi v lese na návštěvě.</p>
+    <p>Vítej ve Stopařské akademii!</p>
+    <p>Zahraj si hru, nauč se poznávat obyvatele lesa podle stop a trusu a pak vyraz ven zjistit, u koho jsi v lese na návštěvě.</p>
     <div class="stats">🏆 Nejlepší skóre: <span id="bestScore">0</span></div>
-    <button onclick="showScreen('mode')">Začít dobrodružství</button>
+    <button onclick="showScreen('gameType')">Začít dobrodružství</button>
+
+    <div class="author">
+      Hra vytvořena pro projekt Zábavná příroda<br>
+      © Štěpánka Kadlecová
+    </div>
   </div>
 </div>
 
+<div id="gameType" class="screen">
+  <h1>Vyber si hru</h1>
+
+  <div class="choice-grid">
+    <div class="choice" onclick="chooseGameType('finder')">
+      <h2>🐾 Stopařská hra</h2>
+      <p>Obrázky jsou odkryté. Hledáš správné dvojice nebo trojice.</p>
+    </div>
+
+    <div class="choice" onclick="chooseGameType('memory')">
+      <h2>🎴 Lesní pexeso</h2>
+      <p>Kartičky jsou zakryté. Hráči se střídají a hledají dvojice nebo trojice.</p>
+    </div>
+  </div>
+
+  <button onclick="showScreen('home')">Zpět</button>
+</div>
+
 <div id="mode" class="screen">
-  <h1>Vyber hru</h1>
+  <h1>Co chceš hledat?</h1>
+
   <div class="choice-grid">
     <div class="choice" onclick="selectMode('track')"><h2>🐾 Zvíře + stopa</h2></div>
     <div class="choice" onclick="selectMode('poop')"><h2>💩 Zvíře + trus</h2></div>
     <div class="choice" onclick="selectMode('triple')"><h2>🌲 Zvíře + stopa + trus</h2></div>
   </div>
+
+  <button onclick="showScreen('gameType')">Zpět</button>
 </div>
 
 <div id="settings" class="screen">
   <h1>Nastavení hry</h1>
 
-  <div class="panel">
+  <div id="playersPanel" class="panel">
     <p>Kolik bude hrát hráčů?</p>
     <button onclick="setPlayers(1)">1 hráč</button>
     <button onclick="setPlayers(2)">2 hráči</button>
@@ -801,19 +333,23 @@ button {
   </div>
 
   <button onclick="startGame()">Spustit hru</button>
+  <button onclick="showScreen('mode')">Zpět</button>
 </div>
 
 <div id="game" class="screen">
-  <h1>Stopařské pexeso</h1>
+  <h1 id="gameTitle">Stopařská hra</h1>
 
   <div class="topbar">
     <span>⏱️ Čas: <span id="timeLeft">0</span> s</span>
     <span>✅ Nalezeno: <span id="found">0</span>/<span id="total">0</span></span>
-    <span>🎲 Hraje: <span id="currentPlayerName">Hráč 1</span></span>
+    <span>⭐ Skóre: <span id="singleScore">0</span></span>
+    <span id="currentPlayerWrap">🎲 Hraje: <span id="currentPlayerName">Hráč 1</span></span>
   </div>
 
   <div id="playersBox" class="players"></div>
   <div id="board" class="board"></div>
+
+  <button onclick="showScreen('gameType')">Hlavní menu</button>
 </div>
 
 <div id="result" class="screen">
@@ -821,8 +357,8 @@ button {
     <h1>🏆 Výborně!</h1>
     <p>Jsi opravdový stopař!</p>
     <div id="finalResults"></div>
+    <button onclick="showScreen('gameType')">Hrát znovu</button>
     <button onclick="showScreen('home')">Hlavní stránka</button>
-    <button onclick="showScreen('mode')">Hrát znovu</button>
   </div>
 </div>
 
@@ -831,36 +367,53 @@ button {
 
 <script>
 const animals = [
-  { id:1, animal:"images/jezevec.png", track:"images/stopa-jezevec.png", poop:"images/trus-jezevec.png" },
-  { id:2, animal:"images/rys.png", track:"images/stopa-rys.png", poop:"images/trus-rys.png" },
-  { id:3, animal:"images/srnka.png", track:"images/stopa-srnka.png", poop:"images/trus-srnka.png" },
-  { id:4, animal:"images/veverka.png", track:"images/stopa-veverka.png", poop:"images/trus-veverka.png" },
-  { id:5, animal:"images/zajic.png", track:"images/stopa-zajic.png", poop:"images/trus-zajic.png" }
+  { id:1, name:"Jezevec", animal:"images/jezevec.png", track:"images/stopa-jezevec.png", poop:"images/trus-jezevec.png" },
+  { id:2, name:"Rys", animal:"images/rys.png", track:"images/stopa-rys.png", poop:"images/trus-rys.png" },
+  { id:3, name:"Srnka", animal:"images/srnka.png", track:"images/stopa-srnka.png", poop:"images/trus-srnka.png" },
+  { id:4, name:"Veverka", animal:"images/veverka.png", track:"images/stopa-veverka.png", poop:"images/trus-veverka.png" },
+  { id:5, name:"Zajíc", animal:"images/zajic.png", track:"images/stopa-zajic.png", poop:"images/trus-zajic.png" }
 ];
 
 const playerColors = ["#4f8f3a", "#d9822b", "#3b75b8", "#9b4fb8"];
 
+let gameType = "finder";
 let mode = "track";
 let playerCount = 1;
 let animalCount = 3;
 let timeLimit = 60;
 let players = [];
 let currentPlayer = 0;
+let singleScore = 0;
 let cards = [];
 let selectedCards = [];
 let found = 0;
 let total = 0;
 let timer;
+let timeLeft = 0;
 
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+
   if (id !== "game") clearInterval(timer);
   if (id === "home") loadBest();
 }
 
+function chooseGameType(type) {
+  gameType = type;
+  showScreen("mode");
+}
+
 function selectMode(m) {
   mode = m;
+
+  if (gameType === "finder") {
+    playerCount = 1;
+    document.getElementById("playersPanel").style.display = "none";
+  } else {
+    document.getElementById("playersPanel").style.display = "block";
+  }
+
   showScreen("settings");
 }
 
@@ -869,12 +422,15 @@ function setAnimalCount(n) { animalCount = n; }
 function setTimeLimit(n) { timeLimit = n; }
 
 function startGame() {
+  clearInterval(timer);
+
   players = [];
   for (let i = 0; i < playerCount; i++) {
     players.push({ name: "Hráč " + (i + 1), score: 0, color: playerColors[i] });
   }
 
   currentPlayer = 0;
+  singleScore = 0;
   found = 0;
   selectedCards = [];
   cards = [];
@@ -882,21 +438,39 @@ function startGame() {
   const chosen = shuffle([...animals]).slice(0, animalCount);
 
   chosen.forEach(a => {
-    cards.push({ id:a.id, kind:"animal", image:a.animal });
+    cards.push({ id:a.id, kind:"animal", image:a.animal, label:a.name });
 
-    if (mode === "track") cards.push({ id:a.id, kind:"track", image:a.track });
-    if (mode === "poop") cards.push({ id:a.id, kind:"poop", image:a.poop });
+    if (mode === "track") {
+      cards.push({ id:a.id, kind:"track", image:a.track, label:"Stopa " + a.name });
+    }
+
+    if (mode === "poop") {
+      cards.push({ id:a.id, kind:"poop", image:a.poop, label:"Trus " + a.name });
+    }
+
     if (mode === "triple") {
-      cards.push({ id:a.id, kind:"track", image:a.track });
-      cards.push({ id:a.id, kind:"poop", image:a.poop });
+      cards.push({ id:a.id, kind:"track", image:a.track, label:"Stopa " + a.name });
+      cards.push({ id:a.id, kind:"poop", image:a.poop, label:"Trus " + a.name });
     }
   });
 
   cards = shuffle(cards);
   total = animalCount;
+  timeLeft = timeLimit;
 
   document.getElementById("found").textContent = found;
   document.getElementById("total").textContent = total;
+  document.getElementById("timeLeft").textContent = timeLeft;
+  document.getElementById("singleScore").textContent = singleScore;
+
+  document.getElementById("gameTitle").textContent =
+    gameType === "finder" ? "Stopařská hra" : "Lesní pexeso";
+
+  document.getElementById("currentPlayerWrap").style.display =
+    gameType === "memory" ? "inline" : "none";
+
+  document.getElementById("playersBox").style.display =
+    gameType === "memory" ? "flex" : "none";
 
   renderPlayers();
   renderBoard();
@@ -916,7 +490,9 @@ function renderPlayers() {
     box.appendChild(div);
   });
 
-  document.getElementById("currentPlayerName").textContent = players[currentPlayer].name;
+  if (players[currentPlayer]) {
+    document.getElementById("currentPlayerName").textContent = players[currentPlayer].name;
+  }
 }
 
 function renderBoard() {
@@ -925,11 +501,18 @@ function renderBoard() {
 
   cards.forEach(card => {
     const div = document.createElement("div");
-    div.className = "card hidden";
-    div.innerHTML = `
-      <div class="card-back">?</div>
-      <img src="${card.image}">
-    `;
+
+    if (gameType === "memory") {
+      div.className = "card hidden";
+      div.innerHTML = `
+        <div class="card-back">?</div>
+        <img src="${card.image}" alt="${card.label}">
+      `;
+    } else {
+      div.className = "card revealed";
+      div.innerHTML = `<img src="${card.image}" alt="${card.label}">`;
+    }
+
     div.addEventListener("click", () => selectCard(div, card));
     board.appendChild(div);
   });
@@ -940,9 +523,11 @@ function selectCard(element, card) {
 
   if (
     selectedCards.length >= needed ||
-    element.classList.contains("revealed") ||
+    element.classList.contains("selected") ||
     element.classList.contains("fly-away")
   ) return;
+
+  if (gameType === "memory" && element.classList.contains("revealed")) return;
 
   element.classList.remove("hidden");
   element.classList.add("revealed", "selected");
@@ -953,15 +538,22 @@ function selectCard(element, card) {
 
 function checkMatch() {
   const needed = mode === "triple" ? 3 : 2;
-
   const sameAnimal = selectedCards.every(x => x.card.id === selectedCards[0].card.id);
   const kinds = new Set(selectedCards.map(x => x.card.kind));
   const correct = sameAnimal && kinds.size === needed;
 
   if (correct) {
     const points = mode === "triple" ? 15 : 10;
-    players[currentPlayer].score += points;
+
+    if (gameType === "memory") {
+      players[currentPlayer].score += points;
+    } else {
+      singleScore += points;
+      document.getElementById("singleScore").textContent = singleScore;
+    }
+
     found++;
+    document.getElementById("found").textContent = found;
 
     showCheckmark();
     showPoints("+" + points);
@@ -972,26 +564,35 @@ function checkMatch() {
     });
 
     selectedCards = [];
-    document.getElementById("found").textContent = found;
     renderPlayers();
 
     if (found === total) {
       setTimeout(finishGame, 1000);
     }
   } else {
-    players[currentPlayer].score -= 2;
-    showPoints("-2");
+    if (gameType === "memory") {
+      players[currentPlayer].score -= 2;
+    } else {
+      singleScore -= 2;
+      document.getElementById("singleScore").textContent = singleScore;
+    }
 
+    showPoints("-2");
     selectedCards.forEach(x => x.element.classList.add("wrong"));
 
     setTimeout(() => {
       selectedCards.forEach(x => {
-        x.element.classList.remove("revealed", "selected", "wrong");
-        x.element.classList.add("hidden");
+        x.element.classList.remove("selected", "wrong");
+
+        if (gameType === "memory") {
+          x.element.classList.remove("revealed");
+          x.element.classList.add("hidden");
+        }
       });
 
       selectedCards = [];
-      nextPlayer();
+
+      if (gameType === "memory") nextPlayer();
     }, 950);
   }
 }
@@ -1002,10 +603,8 @@ function nextPlayer() {
 }
 
 function startTimer() {
-  let timeLeft = timeLimit;
-  document.getElementById("timeLeft").textContent = timeLeft;
-
   clearInterval(timer);
+
   timer = setInterval(() => {
     timeLeft--;
     document.getElementById("timeLeft").textContent = timeLeft;
@@ -1017,17 +616,44 @@ function startTimer() {
 function finishGame() {
   clearInterval(timer);
 
-  const best = Math.max(...players.map(p => p.score));
-  const storedBest = Number(localStorage.getItem("bestScore") || 0);
-  if (best > storedBest) localStorage.setItem("bestScore", best);
-
   const results = document.getElementById("finalResults");
-  results.innerHTML = players
-    .sort((a,b) => b.score - a.score)
-    .map((p, i) => `<p>${i === 0 ? "🏆 " : ""}${p.name}: <strong>${p.score} bodů</strong></p>`)
-    .join("");
+
+  if (gameType === "memory") {
+    const sorted = [...players].sort((a,b) => b.score - a.score);
+    const best = sorted[0].score;
+    saveBest(best);
+
+    results.innerHTML = sorted
+      .map((p, i) => `<p>${i === 0 ? "🏆 " : ""}${p.name}: <strong>${p.score} bodů</strong></p>`)
+      .join("");
+  } else {
+    let bonus = 0;
+    const usedTime = timeLimit - timeLeft;
+
+    if (usedTime <= 60 && found === total) {
+      bonus = 70 - usedTime;
+      singleScore += bonus;
+    }
+
+    saveBest(singleScore);
+
+    results.innerHTML = `
+      <p>Skóre: <strong>${singleScore} bodů</strong></p>
+      <p>Bonus za rychlost: <strong>+${bonus}</strong></p>
+      <p>Čas: <strong>${usedTime} s</strong></p>
+    `;
+  }
 
   showScreen("result");
+}
+
+function saveBest(score) {
+  const best = Number(localStorage.getItem("bestScore") || 0);
+  if (score > best) localStorage.setItem("bestScore", score);
+}
+
+function loadBest() {
+  document.getElementById("bestScore").textContent = localStorage.getItem("bestScore") || 0;
 }
 
 function showCheckmark() {
@@ -1047,10 +673,6 @@ function showPoints(text) {
 
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
-}
-
-function loadBest() {
-  document.getElementById("bestScore").textContent = localStorage.getItem("bestScore") || 0;
 }
 
 loadBest();
