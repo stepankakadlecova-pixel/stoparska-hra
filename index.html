@@ -322,6 +322,11 @@ button:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+  .loading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 12px;
+}
 </style>
 </head>
 
@@ -410,6 +415,7 @@ button:hover {
   </div>
 
   <button onclick="startGame()">Spustit hru</button>
+  <p id="loadingText" class="loading">Načítám obrázky...</p>
   <button onclick="showScreen('mode')">Zpět</button>
 </div>
 
@@ -443,7 +449,58 @@ button:hover {
 
 <div id="checkmark" class="checkmark">✅</div>
 <div id="pointsPop" class="points-pop"></div>
-  <script>
+ <script>
+
+const allImages = [
+  "pozadi.png",
+  "logo.png",
+  "player-stoji.png",
+  "player-beh1.png",
+  "player-beh2.png",
+  "player-skok.png",
+  "kompas.png",
+  "mapa.png",
+  "baterka.png",
+  "dalekohled.png",
+  "lahev.png",
+  "lekarnicka.png",
+  "svacina.png",
+  "stan.png",
+  "fotoaparat.png",
+  "stopa.png",
+  "hvezda.png",
+  "ul.png",
+  "bourkovy_mrak.png",
+  "blato.png",
+  "strom.png",
+  "most.png",
+  "jedovata_houba.png",
+  "medvedi-trus.png",
+  "skala.png",
+  "ohen.png"
+];
+
+function preloadImages(imageList, done) {
+  let loaded = 0;
+
+  imageList.forEach(src => {
+    const img = new Image();
+
+    img.onload = img.onerror = () => {
+      loaded++;
+
+      document.getElementById("loadingText").textContent =
+        "Načítám obrázky... " + loaded + "/" + imageList.length;
+
+      if (loaded === imageList.length) {
+        done();
+      }
+    };
+
+    img.src = src;
+  });
+}
+
 const animals = [
   {
     id: 1,
@@ -881,6 +938,15 @@ function showPoints(text) {
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
+
+startButton.disabled = true;
+startButton.textContent = "NAČÍTÁM...";
+
+preloadImages(allImages, () => {
+  startButton.disabled = false;
+  startButton.textContent = "START";
+  document.getElementById("loadingText").textContent = "Připraveno!";
+});
 
 loadBest();
 </script>
