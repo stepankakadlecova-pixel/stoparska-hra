@@ -458,32 +458,44 @@ button:hover {
  <script>
 
 const allImages = [
-  "pozadi.png",
-  "logo.png",
-  "player-stoji.png",
-  "player-beh1.png",
-  "player-beh2.png",
-  "player-skok.png",
-  "kompas.png",
-  "mapa.png",
-  "baterka.png",
-  "dalekohled.png",
-  "lahev.png",
-  "lekarnicka.png",
-  "svacina.png",
-  "stan.png",
-  "fotoaparat.png",
-  "stopa.png",
-  "hvezda.png",
-  "ul.png",
-  "bourkovy_mrak.png",
-  "blato.png",
-  "strom.png",
-  "most.png",
-  "jedovata_houba.png",
-  "medvedi-trus.png",
-  "skala.png",
-  "ohen.png"
+  "images/les.jpg",
+  "images/logo.png",
+
+  "images/jezevec.png",
+  "images/stopa-jezevec.png",
+  "images/trus-jezevec.png",
+
+  "images/jelen.png",
+  "images/stopa-jelen.png",
+  "images/trus-jelen.png",
+
+  "images/kuna.png",
+  "images/stopy-kuna.png",
+  "images/trus-kuna.png",
+
+  "images/prase.png",
+  "images/stopa-prase.png",
+  "images/trus-prase.png",
+
+  "images/rys.png",
+  "images/stopa-rys.png",
+  "images/trus-rys.png",
+
+  "images/srnka.png",
+  "images/stopa-srnka.png",
+  "images/trus-srnka.png",
+
+  "images/veverka.png",
+  "images/stopa-veverka.png",
+  "images/trus-veverka.png",
+
+  "images/vlk.png",
+  "images/stopa-vlk.png",
+  "images/trus-vlk.png",
+
+  "images/zajic.png",
+  "images/stopa-zajic.png",
+  "images/trus-zajic.png"
 ];
 
 function preloadImages(imageList, done) {
@@ -958,12 +970,14 @@ function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
+const startButton = document.querySelector('button[onclick="startGame()"]');
+
 startButton.disabled = true;
 startButton.textContent = "NAČÍTÁM...";
 
 preloadImages(allImages, () => {
   startButton.disabled = false;
-  startButton.textContent = "START";
+ startButton.textContent = "Spustit hru";
   document.getElementById("loadingText").textContent = "Připraveno!";
 });
 
