@@ -93,6 +93,12 @@ button {
 button:hover {
   background: #3d732d;
 }
+  .selected-button {
+  background: #1f5c22 !important;
+  border: 3px solid #0f3511 !important;
+  box-shadow: 0 0 0 4px rgba(31,92,34,.25);
+  transform: scale(1.05);
+}
 
 .choice-grid {
   display: grid;
@@ -396,20 +402,20 @@ button:hover {
 
   <div id="playersPanel" class="panel">
     <p>Kolik bude hrát hráčů?</p>
-    <button onclick="setPlayers(1)">1 hráč</button>
-    <button onclick="setPlayers(2)">2 hráči</button>
-    <button onclick="setPlayers(3)">3 hráči</button>
-    <button onclick="setPlayers(4)">4 hráči</button>
+   <button onclick="setPlayers(1,event)">1 hráč</button>
+<button onclick="setPlayers(2,event)">2 hráči</button>
+<button onclick="setPlayers(3,event)">3 hráči</button>
+<button onclick="setPlayers(4,event)">4 hráči</button>
 
     <p class="stats">Vybráno hráčů: <span id="selectedPlayers">1</span></p>
   </div>
 
   <div class="panel">
     <p>Kolik zvířat bude ve hře?</p>
-    <button onclick="setAnimalCount(3)">3 zvířata</button>
-    <button onclick="setAnimalCount(5)">5 zvířat</button>
-    <button onclick="setAnimalCount(8)">8 zvířat</button>
-    <button onclick="setAnimalCount('all')">Všechna zvířata</button>
+   <button class="animal-button" onclick="setAnimalCount(3,event)">3 zvířata</button>
+<button class="animal-button" onclick="setAnimalCount(5,event)">5 zvířat</button>
+<button class="animal-button" onclick="setAnimalCount(8,event)">8 zvířat</button>
+<button class="animal-button" onclick="setAnimalCount('all',event)">Všechna zvířata</button>
 
     <p class="stats">Vybráno zvířat: <span id="selectedAnimals">3</span></p>
   </div>
@@ -611,12 +617,19 @@ function selectMode(selectedMode) {
   showScreen("settings");
 }
 
-function setPlayers(count) {
+function setPlayers(count, event) {
   playerCount = count;
   document.getElementById("selectedPlayers").textContent = count;
+
+  document
+    .querySelectorAll("#playersPanel button")
+    .forEach(btn => btn.classList.remove("selected-button"));
+
+  event.target.classList.add("selected-button");
 }
 
-function setAnimalCount(count) {
+function setAnimalCount(count, event) {
+
   if (count === "all") {
     animalCount = animals.length;
     document.getElementById("selectedAnimals").textContent = "všechna";
@@ -624,6 +637,12 @@ function setAnimalCount(count) {
     animalCount = count;
     document.getElementById("selectedAnimals").textContent = count;
   }
+
+  document
+    .querySelectorAll(".animal-button")
+    .forEach(btn => btn.classList.remove("selected-button"));
+
+  event.target.classList.add("selected-button");
 }
 
 function startGame() {
