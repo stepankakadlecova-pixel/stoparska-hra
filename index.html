@@ -342,6 +342,25 @@ button:hover {
   font-weight: bold;
   margin-top: 12px;
 }
+  .badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.beginner {
+  background: #dff5d8;
+  color: #1f5c22;
+  border: 2px solid #6ea04f;
+}
+  .advanced {
+  background: #ffe7c2;
+  color: #a85b00;
+  border: 2px solid #e6a23c;
+}
 </style>
 </head>
 
@@ -371,17 +390,19 @@ button:hover {
 <div id="gameType" class="screen">
   <h1>Vyber si hru</h1>
 
-  <div class="choice-grid">
-    <div class="choice" onclick="chooseGameType('finder')">
-      <h2>🐾 Stopařská hra</h2>
-      <p>Obrázky jsou odkryté. Hledáš správné dvojice nebo trojice.</p>
-    </div>
-
-    <div class="choice" onclick="chooseGameType('memory')">
-      <h2>🎴 Lesní pexeso</h2>
-      <p>Kartičky jsou zakryté. Hráči se střídají a hledají dvojice nebo trojice.</p>
-    </div>
+ <div class="choice-grid">
+  <div class="choice" onclick="chooseGameType('finder')">
+    <div class="badge beginner">Vhodné pro začátečníky</div>
+    <h2>🐾 Stopařská hra</h2>
+    <p>Obrázky jsou odkryté. Hledáš správné dvojice nebo trojice.</p>
   </div>
+
+  <div class="choice" onclick="chooseGameType('memory')">
+  <div class="badge advanced">Vhodné pro pokročilé</div>
+  <h2>🎴 Lesní pexeso</h2>
+  <p>Kartičky jsou zakryté. Hráči se střídají a hledají dvojice nebo trojice.</p>
+</div>
+ 
 
   <button onclick="showScreen('home')">Zpět</button>
 </div>
