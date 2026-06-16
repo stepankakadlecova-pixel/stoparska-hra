@@ -380,7 +380,7 @@ button:hover {
     <div class="stats">🏆 Nejlepší skóre: <span id="bestScore">0</span></div>
 
     <button onclick="showScreen('gameType')">Začít dobrodružství</button>
-
+<p id="homeLoadingText" class="loading">Načítám obrázky...</p>
     <div class="author">
       Hra vytvořena pro projekt Zábavná příroda<br>
       © Štěpánka Kadlecová
@@ -452,7 +452,7 @@ button:hover {
     <p class="stats">Vybráno zvířat: <span id="selectedAnimals">3</span></p>
   </div>
 
-  <button onclick="startGame()">Spustit hru</button>
+  <button id="startButton" onclick="startGame()">Spustit hru</button>
   <p id="loadingText" class="loading">Načítám obrázky...</p>
   <button onclick="showScreen('mode')">Zpět</button>
 </div>
@@ -529,7 +529,6 @@ const allImages = [
   "images/stopa-zajic.png",
   "images/trus-zajic.png"
 ];
-
 function preloadImages(imageList, done) {
   let loaded = 0;
 
@@ -539,8 +538,13 @@ function preloadImages(imageList, done) {
     img.onload = img.onerror = () => {
       loaded++;
 
-      document.getElementById("loadingText").textContent =
-        "Načítám obrázky... " + loaded + "/" + imageList.length;
+      const text = "Načítám obrázky... " + loaded + "/" + imageList.length;
+
+      const homeLoadingText = document.getElementById("homeLoadingText");
+      const loadingText = document.getElementById("loadingText");
+
+      if (homeLoadingText) homeLoadingText.textContent = text;
+      if (loadingText) loadingText.textContent = text;
 
       if (loaded === imageList.length) {
         done();
@@ -550,7 +554,6 @@ function preloadImages(imageList, done) {
     img.src = src;
   });
 }
-
 const animals = [
   {
     id: 1,
@@ -1010,7 +1013,8 @@ startButton.textContent = "NAČÍTÁM...";
 preloadImages(allImages, () => {
   startButton.disabled = false;
  startButton.textContent = "Spustit hru";
-  document.getElementById("loadingText").textContent = "Připraveno!";
+document.getElementById("loadingText").textContent = "✅ Připraveno!";
+document.getElementById("homeLoadingText").textContent = "✅ Obrázky připraveny!";
 });
 
 loadBest();
