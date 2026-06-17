@@ -370,6 +370,38 @@ button:hover {
 .revealed img {
   opacity: 1;
 }
+  .memory-mode .board {
+  height: calc(100dvh - 190px);
+  overflow: hidden;
+  align-items: center;
+}
+
+.memory-mode .card {
+  min-height: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.memory-mode .card img {
+  height: 80%;
+  max-height: 100%;
+}
+
+@media (max-width: 700px) {
+  .memory-mode .board {
+    height: calc(100dvh - 160px);
+    gap: 8px;
+  }
+
+  .memory-mode .card {
+    border-width: 3px;
+    border-radius: 14px;
+    padding: 5px;
+  }
+
+  .memory-mode .card-back {
+    font-size: 42px;
+  }
+}
 </style>
 </head>
 
@@ -771,6 +803,11 @@ function startGame() {
 
   document.getElementById("gameTitle").textContent =
     gameType === "finder" ? "Stopařská hra" : "Lesní pexeso";
+  
+  document.getElementById("game").classList.toggle(
+  "memory-mode",
+  gameType === "memory"
+);
 
   document.getElementById("currentPlayerWrap").style.display =
     gameType === "memory" ? "inline" : "none";
